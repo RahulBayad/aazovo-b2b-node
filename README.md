@@ -1,1 +1,1 @@
-# aazovo-b2b-node
+# Aazovo B2B Back-End with Node.js and MySQL
