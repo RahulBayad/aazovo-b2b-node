@@ -9,8 +9,7 @@ const dbConnection = async () => {
       database: process.env.DB_DATABASE || "aazovo",
     }).promise();
 
-    const [rows] = await db.query("SELECT * FROM units")
-    console.log("res ", rows);
+    return db
     
   } catch (error) {
     console.log("Error while connection to database,", error);

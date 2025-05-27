@@ -6,7 +6,8 @@ config({
     path : "./src/.env"
 })
 
-dbConnection()
+export const db = await dbConnection()
+
 app.listen( process.env.PORT || 3002 , ()=>{
     console.log("Server started at port", process.env.PORT )
 })
