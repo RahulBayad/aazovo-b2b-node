@@ -6,8 +6,12 @@ const dbConnection = async () => {
       host: process.env.DB_HOSTNAME || "localhost",
       user: process.env.DB_USER || "root",
       password: process.env.DB_PASSWORD || "Rahul@123",
-      database: process.env.DB_DATABASE || "sys",
-    });
+      database: process.env.DB_DATABASE || "aazovo",
+    }).promise();
+
+    const [rows] = await db.query("SELECT * FROM units")
+    console.log("res ", rows);
+    
   } catch (error) {
     console.log("Error while connection to database,", error);
   }

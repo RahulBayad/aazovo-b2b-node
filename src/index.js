@@ -6,9 +6,7 @@ config({
     path : "./src/.env"
 })
 
-dbConnection().then(()=>{
-    console.log("db connected");
-})
+dbConnection()
 app.listen( process.env.PORT || 3002 , ()=>{
     console.log("Server started at port", process.env.PORT )
 })
