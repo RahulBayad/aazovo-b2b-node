@@ -16,9 +16,17 @@ export const getContinents = async (req,res)=>{
 
 export const createContinent = async (req, res)=>{
     try {
+        const data = req?.body
+        console.log("data", data)
+        if(!data?.continent){
+            res.json({
+            status: 401,
+            message: "Please Provide Continent Name!!",
+        })
+        }
         const [rows] = await db.query(
             `INSERT INTO continent (continent, created_on) VALUES (?, ?)`, 
-            ['Australia', new Date()]
+            [ data?.continent, new Date()]
         ) 
         console.log("Continents created", rows);
         res.json({
