@@ -1,4 +1,5 @@
-import multer, { diskStorage } from "multer";
+import multer from "multer";
+import { diskStorage } from "multer";
 import path from "path"
 
 const storage = diskStorage({
@@ -9,5 +10,4 @@ const storage = diskStorage({
         cb(null, Date.now() + "_" + file.originalname)
     }
 })
-
 export const upload = multer({ storage })

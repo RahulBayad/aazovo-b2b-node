@@ -1,8 +1,9 @@
-import { db } from "../../index.js"
+import { Request, Response } from "express";
+import { db } from "../../index.ts"
 
-export const getContinents = async (req,res)=>{
+export const getContinents = async (req: Request, res: Response): Promise<void> =>{
     try {
-        const [rows] = await db.query(`SELECT * FROM continent`)
+        const [rows] = await db.query(`SELECT * FROM continents`)
         console.log("Continents are", rows);
         res.json({
             status: 200,
@@ -14,7 +15,7 @@ export const getContinents = async (req,res)=>{
     }
 }
 
-export const createContinent = async (req, res)=>{
+export const createContinent = async (req: Request, res: Response): Promise<void> =>{
     try {
         const data = req?.body
         console.log("data", data)

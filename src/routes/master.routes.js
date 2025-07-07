@@ -1,13 +1,12 @@
-import { Router } from "express";
-import { getUnits } from "../controllers/master/units.controller.js";
-import { getCountries } from "../controllers/master/countries.controller.js";
-import { createContinent, getContinents } from "../controllers/master/continents.controller.js";
-
-const router = Router()
-
-router.route("/units").get(getUnits)
-router.route("/countries").get(getCountries)
-router.route("/continents").get(getContinents)
-router.route("/continent/create").post(createContinent)
-
-export default router
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var units_controller_js_1 = require("../controllers/master/units.controller.js");
+var countries_controller_js_1 = require("../controllers/master/countries.controller.js");
+var continents_controller_js_1 = require("../controllers/master/continents.controller.js");
+var router = (0, express_1.Router)();
+router.route("/units").get(units_controller_js_1.getUnits);
+router.route("/countries").get(countries_controller_js_1.getCountries);
+router.route("/continents").get(continents_controller_js_1.getContinents);
+router.route("/continent/create").post(continents_controller_js_1.createContinent);
+exports.default = router;

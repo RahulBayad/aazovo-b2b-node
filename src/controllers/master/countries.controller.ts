@@ -1,6 +1,7 @@
-import { db } from "../../index.js"
+import { Request, Response } from "express";
+import { db } from './../../index.ts'
 
-export const getCountries = async (req,res)=>{
+export const getCountries = async (req: Request, res: Response): Promise<void>=>{
     try {
         const [rows] = await db.query(`
             SELECT * FROM country

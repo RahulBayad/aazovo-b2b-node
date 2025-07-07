@@ -1,6 +1,6 @@
 import { config } from "dotenv"
-import { app } from "./app.js"
-import dbConnection from "./db/database.js"
+import { app } from "./app.ts"
+import dbConnection from "./db/database.ts"
 
 config({
     path : "./src/.env"
