@@ -2,9 +2,7 @@ import { config } from "dotenv"
 import { app } from "./app.ts"
 import dbConnection from "./db/database.ts"
 
-config({
-    path : "./src/.env"
-})
+config()
 
 export const db = await dbConnection()
 
