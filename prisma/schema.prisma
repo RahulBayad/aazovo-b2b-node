@@ -15,68 +15,63 @@ datasource db {
 }
 
 model Company {
-  id                             Int      @id @default(autoincrement())
-  company_code                   String? @unique 
-  company_name                   String
-  status                         String
-  owner_name                     String? 
-  ownership_type                 String? 
-  establishment_year             Int? 
-  industry                       String
-  business_category              String[]
-  company_type                   String?
-  company_website                String?
-  company_logo_brochure          String?
-  primary_contact_no             String?
-  alternate_contact_no           String?
-  primary_email                  String
-  alternate_email                String?
-  gst_no                         String?
-  pan_no                         String?
-  trn_no                         String?
-  tan_no                         String?
+  id                    Int      @id @default(autoincrement())
+  company_code          String?  @unique
+  company_name          String
+  status                String
+  owner_name            String?
+  ownership_type        String?
+  establishment_year    Int?
+  industry              String
+  business_category     String[]
+  company_type          String?
+  company_website       String?
+  company_logo_brochure String?
+  primary_contact_no    String?
+  alternate_contact_no  String?
+  primary_email         String
+  alternate_email       String?
+  gst_no                String?
+  pan_no                String?
+  trn_no                String?
+  tan_no                String?
 
-  headOfficeId                   Int?
-  headOffice                     HeadOffice? @relation(fields: [headOfficeId], references: [id])
+  headOffice       HeadOffice?
+  kyc_verification KYCVerification?
+  reference        Reference[]
 
-  kycVerificationId              Int?
-  kyc_verification               KYCVerification? @relation(fields: [kycVerificationId], references: [id])
+  offices      Office[]
+  bank_details BankDetail[]
+  billingDocs  BillingDocument[]
 
-  referenceId                    Int?
-  reference                      Reference? @relation(fields: [referenceId], references: [id])
+  enableBilling String? @default("No")
+  userAccess    String? @default("No")
 
-  offices                        Office[]
-  bank_details                   BankDetail[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  enableBilling                  String?
-  userAccess                     String?
-  billingDocs                    BillingDocument[]
-
-  createdAt                      DateTime @default(now())
-  updatedAt                      DateTime @updatedAt
+  @@index([company_code])
 }
 
 model KYCVerification {
-  id                Int     @id @default(autoincrement())
-  gst_certificate_id      Int?
-  gst_certificate         Document? @relation("GstCert", fields: [gst_certificate_id], references: [id])
+  id                   Int     @id @default(autoincrement())
+  gst_certificate_file String?
+  gst_remark           String?
+  gst_verified         String? @default("No")
 
-  pan_card_id             Int?
-  pan_card                Document? @relation("PanCard", fields: [pan_card_id], references: [id])
+  pan_card_file     String?
+  pan_card_remark   String?
+  pan_card_verified String? @default("No")
 
-  declaration_194q_id     Int?
-  declaration_194q        Document? @relation("Decl194Q", fields: [declaration_194q_id], references: [id])
+  declaration_194q_file     String?
+  declaration_194q_remark   String?
+  declaration_194q_verified String? @default("No")
 
-  authority_letter_id     Int?
-  authority_letter        Document? @relation("AuthorityLetter", fields: [authority_letter_id], references: [id])
-}
-
-model Document {
-  id        Int    @id @default(autoincrement())
-  file      String
-  remark    String?
-  verified  String?
-  
+  authority_letter_file     String?
+  authority_letter_remark   String?
+  authority_letter_verified String? @default("No")
+  company                   Company @relation(fields: [companyId], references: [id])
+  companyId                 Int     @unique
 }
 
 model HeadOffice {
@@ -86,17 +81,14 @@ model HeadOffice {
   contact_person String?
   email          String?
   phone          String?
-  addressId      Int?           @unique
-  address        OfficeAddress? @relation(fields: [addressId], references: [id])
-}
+  country        String?
+  state          String?
+  city           String?
+  pincode        Int?
+  location       String?
 
-model OfficeAddress {
-  id       Int    @id @default(autoincrement())
-  country  String?
-  state    String?
-  city     String?
-  pincode  Int?
-  location String?
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId Int     @unique
 }
 
 model Office {
@@ -107,21 +99,25 @@ model Office {
   contact_person String?
   email          String?
   phone          String?
-  addressId      Int? @unique
-  address        OfficeAddress? @relation(fields: [addressId], references: [id])
+  country        String?
+  state          String?
+  city           String?
+  pincode        Int?
+  location       String?
   companyId      Int
-  company        Company   @relation(fields: [companyId], references: [id])
+  company        Company @relation(fields: [companyId], references: [id])
 }
 
 model BankDetail {
-  id                  Int     @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   account_number      BigInt?
+  accunt_type         String?
   account_holder_name String?
   bank_name           String?
   ifsc_code           String?
   primary             Boolean?
   companyId           Int
-  company             Company @relation(fields: [companyId], references: [id])
+  company             Company  @relation(fields: [companyId], references: [id])
 }
 
 model Reference {
@@ -131,14 +127,14 @@ model Reference {
   company_name String?
   email        String?
   phone        String?
+  companyId    Int
+  company      Company @relation(fields: [companyId], references: [id])
 }
 
-
-
 model BillingDocument {
-  id         Int    @id @default(autoincrement())
-  doc_name   String?
-  doc_file   String
-  companyId      Int
-  company        Company   @relation(fields: [companyId], references: [id])
+  id        Int     @id @default(autoincrement())
+  doc_name  String?
+  doc_file  String
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
 }
