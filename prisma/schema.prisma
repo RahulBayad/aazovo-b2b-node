@@ -26,7 +26,7 @@ model Company {
   business_category     String[]
   company_type          String?
   company_website       String?
-  company_logo_brochure String?
+  company_logo_url String?
   primary_contact_no    String?
   alternate_contact_no  String?
   primary_email         String
@@ -111,7 +111,7 @@ model Office {
 model BankDetail {
   id                  Int      @id @default(autoincrement())
   account_number      BigInt?
-  accunt_type         String?
+  account_type         String?
   account_holder_name String?
   bank_name           String?
   ifsc_code           String?
