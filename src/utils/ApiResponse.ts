@@ -1,11 +1,11 @@
 class ApiResponse {
   public success: boolean;
   constructor(
-    public statusCode: number,
+    public status: number,
     public message: string,
-    public data: any
+    public data?: any
   ) {
-    this.success = statusCode < 400;
+    this.success = status < 400;
   }
 }
 

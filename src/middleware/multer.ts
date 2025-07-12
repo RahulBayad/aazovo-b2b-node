@@ -3,7 +3,7 @@ import { diskStorage } from "multer";
 import path from "path"
 
 const storage = diskStorage({
-    destination : (_, _, cb)=>{
+    destination : (_, file, cb)=>{
         cb(null, path.join( process.cwd(), 'temp/uploads'))
     },
     filename : (_, file, cb )=>{

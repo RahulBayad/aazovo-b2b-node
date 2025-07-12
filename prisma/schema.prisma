@@ -22,8 +22,8 @@ model Company {
   owner_name            String?
   ownership_type        String?
   establishment_year    Int?
-  industry              String
-  business_category     String[]
+  industry              String?
+  business_category     String
   company_type          String?
   company_website       String?
   company_logo_url String?
@@ -115,7 +115,7 @@ model BankDetail {
   account_holder_name String?
   bank_name           String?
   ifsc_code           String?
-  primary             Boolean?
+  primary             String?
   companyId           Int
   company             Company  @relation(fields: [companyId], references: [id])
 }

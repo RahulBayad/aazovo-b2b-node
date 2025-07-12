@@ -4,6 +4,7 @@ export const asyncHandler =
   (fn: (req: Request, res: Response, next: NextFunction) => Promise<any>) =>
   (req: Request, res: Response, next: NextFunction) => {
     fn(req, res, next).catch((error) => {
+      console.log("error", error)
       res.status(500).json({
         success: false,
         message: "Internal Server Error",
