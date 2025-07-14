@@ -26,51 +26,57 @@ export const getCompanies = asyncHandler(
 export const createCompany = asyncHandler(
   async (req: Request, res: Response) => {
     // console.log("request data", req.body);
-    // console.log("files", req.files);
+    console.log("files", req.files);
     // const files = req.files
     const formData = req.body
-    const {
+    let {
       bank_details,
       reference,
       headOffice,
       kyc_verification,
       offices,
       billingDocs,
+      establishment_year,
       ...fields
     } = formData;
-    // const dataToInsert = req.body 
-    // for(let i=0; i < files?.length && Array.isArray(files); i++){
-    //     dataToInsert[files[  i].fieldname] = files[i]
-    // }
-    console.log("fields are", fields)
+    const files = req.files
+    
+    establishment_year = Number(establishment_year)
+    headOffice.pincode = Number(headOffice.pincode)
 
-    const insert = await prisma.company.create({
-      data : {
-        ...fields,
-        bank_details : {
-          create : bank_details?.length > 0 ? bank_details : [],
-        },
-        reference: {
-          create: reference ?? undefined,
-        },
-        headOffice: {
-          create: headOffice ?? undefined,
-        },
-        kyc_verification: {
-          create: kyc_verification ?? undefined,
-        },
-        offices: {
-          create: offices?.length ? offices : [],
-        },
-        billingDocs: {
-          create: billingDocs?.length ? billingDocs : [],
-        },
-        
-      }
+    offices.forEach((office: any) => {
+      office.pincode = Number(office.pincode)
     })
-    console.log("inserted", insert )
+
+    console.log("offices", offices);
+
+    // const insert = await prisma.company.create({
+    //   data : {
+    //     ...fields,
+    //     bank_details : {
+    //       create : bank_details?.length > 0 ? bank_details : [],
+    //     },
+    //     reference: {
+    //       create: reference ?? undefined,
+    //     },
+    //     headOffice: {
+    //       create: headOffice ?? undefined,
+    //     },
+    //     kyc_verification: {
+    //       create: kyc_verification ?? undefined,
+    //     },
+    //     offices: {
+    //       create: offices?.length ? offices : [],
+    //     },
+    //     billingDocs: {
+    //       create: billingDocs?.length ? billingDocs : [],
+    //     },
+        
+    //   }
+    // })
+    // console.log("inserted", insert )
     return res
       .status(201)
-      .json(new ApiResponse(201, "Company Created Successfully!!", insert));
+      .json(new ApiResponse(201, "Company Created Successfully!!", []));
   }
 );
