@@ -51,6 +51,7 @@ model Company {
   updatedAt DateTime @updatedAt
 
   @@index([company_code])
+  @@map("companies")
 }
 
 model KYCVerification {
@@ -72,6 +73,8 @@ model KYCVerification {
   authority_letter_verified String? @default("No")
   company                   Company @relation(fields: [companyId], references: [id])
   companyId                 Int     @unique
+
+  @@map("kyc_verification")
 }
 
 model HeadOffice {
@@ -89,6 +92,8 @@ model HeadOffice {
 
   company   Company @relation(fields: [companyId], references: [id])
   companyId Int     @unique
+
+   @@map("headoffices")
 }
 
 model Office {
@@ -106,18 +111,22 @@ model Office {
   location       String?
   companyId      Int
   company        Company @relation(fields: [companyId], references: [id])
+  
+   @@map("offices")
 }
 
 model BankDetail {
   id                  Int      @id @default(autoincrement())
   account_number      BigInt?
-  account_type         String?
+  account_type        String?
   account_holder_name String?
   bank_name           String?
   ifsc_code           String?
-  primary             Boolean?
+  primary             String? @default("No")
   companyId           Int
   company             Company  @relation(fields: [companyId], references: [id])
+
+  @@map("bankdetails")
 }
 
 model Reference {
@@ -129,6 +138,8 @@ model Reference {
   phone        String?
   companyId    Int
   company      Company @relation(fields: [companyId], references: [id])
+
+  @@map("references")
 }
 
 model BillingDocument {
@@ -137,4 +148,6 @@ model BillingDocument {
   doc_file  String
   companyId Int
   company   Company @relation(fields: [companyId], references: [id])
+
+  @@map("billing_documents")
 }
